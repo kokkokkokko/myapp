@@ -2,17 +2,33 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>投稿内容記入</title>
+    <title>投稿詳細</title>
 </head>
 <body>
-    <h1>投稿内容記入</h1>
 
-    {% if back_to == "search" %}
-        <a href="{% url 'mychat:search' %}">戻る</a>
-    {% elif back_to == "recom" %}
-        <a href="{% url 'mychat:recom' %}">戻る</a>
-    {% else %}
-        <a href="{% url 'mychat:recom' %}">戻る</a>
-    {% endif %}
+<h1>{{ post.shop_name }} の詳細</h1>
+
+<p><strong>ジャンル：</strong> {{ post.genre }}</p>
+<p><strong>場所：</strong> {{ post.location }}</p>
+<p><strong>感想：</strong> {{ post.menu }}</p>
+
+{% if post.photo %}
+    <p><img src="{{ post.photo.url }}" width="300"></p>
+{% endif %}
+
+<p><strong>投稿者：</strong> {{ post.user }}</p>
+<p><strong>投稿日：</strong> {{ post.created }}</p>
+
+<!-- 店の詳細ページへのリンク -->
+{% if shop %}
+    <a href="{% url 'mychat:shop_detail' shop.id %}">
+        {{ post.shop_name }}
+    </a>
+{% else %}
+    {{ post.shop_name }}
+{% endif %}
+
+<p><a href="{% url 'mychat:list' %}">一覧に戻る</a></p>
+
 </body>
 </html>
